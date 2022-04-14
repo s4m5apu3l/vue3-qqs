@@ -1,54 +1,43 @@
 <template>
-  <div>
-    <div>
-      <form>
-        <input @input="title = $event.target.value" v-bind:value="title" class="input" type="text" placeholder="nazvanuie">
-        <input @input="body = $event.target.value" v-bind:value="body" class="input" type="text" placeholder="opisnaie">
-        <button @click="createPost">create</button>
-      </form>
-    </div>
-    <div class="post" v-for='(post, index ) in posts' :key="index">
-      <div><strong>nazvanie: </strong>{{ post.title }}</div>
-      <div><strong>nazvanie: </strong>{{ post.body }}</div>
-    </div>
+  <div class="app">
+    <post-form
+      @create="createPost"
+    />
+    <post-list :posts="posts"
+
+    />
   </div>
 </template>
 
 <script>
+import PostForm from "@/components/PostForm.vue"
+import PostList from "@/components/PostList.vue"
+
   export default {
+    components: {
+      PostList, PostForm
+    },
     data() {
       return {
         posts: [
           {id: 1, title: 'JS', body: 'opisanie'},
           {id: 2, title: 'JS 2', body: 'opisanie 2'},
           {id: 3, title: 'JS 3', body: 'opisanie 3'},
+          {id: 4, title: 'JS 4', body: 'opisanie 4'},
         ],
-        title: '',
-        body: '',
       }
     },
     methods: {
-      createPost() {
-        const newPost = {
-          id: Date.now(),
-          title: this.title,
-          body: this.body,
-        }
+      createPost(post) {
+        this.posts.push(post);
       },
     }
   }
 </script>
 
 <style>
- * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  .post {
-    border: 1px solid black;
-    margin-top: 20px;
+  .app {
+    padding: 20px;
   }
 
   </style>
